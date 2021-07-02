@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -14,18 +15,18 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 /**
- * PostOfficeSim.java A client program that uses 
- *    - the List ADT to store the collection of audio clips for the numbers
- *      0 to 9, and also the word "Counter"
- *    - the Queue ADT to store the customer objects that represent the customers
- *      waiting to be served at the post office.
- *    - the List ADT to store the customer objects that have been served. This
- *      list is used to generate the analysis report.
+ * PostOfficeSim.java A client program that uses - the List ADT to store the
+ * collection of audio clips for the numbers 0 to 9, and also the word "Counter"
+ * - the Queue ADT to store the customer objects that represent the customers
+ * waiting to be served at the post office. - the List ADT to store the customer
+ * objects that have been served. This list is used to generate the analysis
+ * report.
  *
  * @author Kat Tan
  * @version 2.0
  */
 public class PostOfficeSim extends javax.swing.JFrame {
+
     private JTextField[] jtfDisplayRowArr = new JTextField[4];
     private String callString = " --> Counter ";
     private CounterListener counterListener = new CounterListener();
@@ -367,7 +368,17 @@ public class PostOfficeSim extends javax.swing.JFrame {
         str += String.format("%-5s %-10s %-20s %-20s %-15s %-15s\n",
                 "No", "Seq. No", "Arr. Time (ms)", "Serve Time(ms)", "Counter", "Waiting Time(s)");
 
-
+        int totalWaiting = 0;
+        for (int i = 0; i < serviceList.size(); i++) {
+            str += String.format(i+1 + ".       ");
+            str += serviceList.get(i).toString();
+            str += serviceList.get(i).getWaitingTime() + "\n";
+            totalWaiting += serviceList.get(i).getWaitingTime();
+        }
+        
+        str += "\nTotal customers served  : " + serviceList.size();
+        str += "\nAverage waiting time  : " + (totalWaiting/serviceList.size()) + "s";
+        
         Font reportFont = new Font("Arial", Font.BOLD, 14);
         jtaReport.setText(str);
         jtaReport.setEditable(false);
@@ -381,10 +392,23 @@ public class PostOfficeSim extends javax.swing.JFrame {
 
     private void jbtCounter5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtCounter5ActionPerformed
         counterListener.actionPerformed(evt);
+        if (!q.isEmpty()) {
+            Calendar currentTime = new GregorianCalendar();
+            q.peek().setCounter(5);
+            q.peek().setServeTime(currentTime);
+            updateDisplay(q.peek());
+            announceNumber(q.peek());
+            serviceList.add(q.poll());
+        }
+
     }//GEN-LAST:event_jbtCounter5ActionPerformed
 
     private void jbtTakeNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtTakeNumberActionPerformed
+        Customer customer = new Customer(nextNumber);
+        q.add(customer);
 
+        jtaSlip.setText("Your number: " + nextNumber);
+        nextNumber++;
     }//GEN-LAST:event_jbtTakeNumberActionPerformed
 
     private void jtfRow2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfRow2ActionPerformed
@@ -401,18 +425,50 @@ public class PostOfficeSim extends javax.swing.JFrame {
 
     private void jbtCounter1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtCounter1ActionPerformed
         counterListener.actionPerformed(evt);
+        if (!q.isEmpty()) {
+            Calendar currentTime = new GregorianCalendar();
+            q.peek().setCounter(1);
+            q.peek().setServeTime(currentTime);
+            updateDisplay(q.peek());
+            announceNumber(q.peek());
+            serviceList.add(q.poll());
+        }
     }//GEN-LAST:event_jbtCounter1ActionPerformed
 
     private void jbtCounter2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtCounter2ActionPerformed
         counterListener.actionPerformed(evt);
+        if (!q.isEmpty()) {
+            Calendar currentTime = new GregorianCalendar();
+            q.peek().setCounter(2);
+            q.peek().setServeTime(currentTime);
+            updateDisplay(q.peek());
+            announceNumber(q.peek());
+            serviceList.add(q.poll());
+        }
     }//GEN-LAST:event_jbtCounter2ActionPerformed
 
     private void jbtCounter3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtCounter3ActionPerformed
         counterListener.actionPerformed(evt);
+        if (!q.isEmpty()) {
+            Calendar currentTime = new GregorianCalendar();
+            q.peek().setCounter(3);
+            q.peek().setServeTime(currentTime);
+            updateDisplay(q.peek());
+            announceNumber(q.peek());
+            serviceList.add(q.poll());
+        }
     }//GEN-LAST:event_jbtCounter3ActionPerformed
 
     private void jbtCounter4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtCounter4ActionPerformed
         counterListener.actionPerformed(evt);
+        if (!q.isEmpty()) {
+            Calendar currentTime = new GregorianCalendar();
+            q.peek().setCounter(4);
+            q.peek().setServeTime(currentTime);
+            updateDisplay(q.peek());
+            announceNumber(q.peek());
+            serviceList.add(q.poll());
+        }
     }//GEN-LAST:event_jbtCounter4ActionPerformed
 
     /**
